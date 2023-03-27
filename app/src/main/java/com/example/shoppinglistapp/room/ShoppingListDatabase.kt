@@ -2,8 +2,7 @@ package com.example.shoppinglistapp.room
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import androidx.room.TypeConverter
-import androidx.room.TypeConverters
+import com.example.shoppinglistapp.model.ShoppingList
 
 
 @Database(entities = [ShoppingList::class], version = 4)

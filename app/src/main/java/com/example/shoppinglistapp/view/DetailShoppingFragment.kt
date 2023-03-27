@@ -1,4 +1,4 @@
-package com.example.shoppinglistapp
+package com.example.shoppinglistapp.view
 
 import android.os.Build
 import android.os.Bundle
@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shoppinglistapp.adabter.ShoppingDetailAdapter
 import com.example.shoppinglistapp.databinding.FragmentDetailShoppingBinding
 import com.example.shoppinglistapp.model.CompletedShopping
-import com.example.shoppinglistapp.room.ShoppingList
+import com.example.shoppinglistapp.model.ShoppingList
 
 
 class DetailShoppingFragment : Fragment() {

@@ -2,8 +2,7 @@ package com.example.shoppinglistapp.room
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.example.shoppinglistapp.model.CompletedShopping
-import com.example.shoppinglistapp.model.PastShoppingList
+import com.example.shoppinglistapp.model.ShoppingList
 
 
 @Dao

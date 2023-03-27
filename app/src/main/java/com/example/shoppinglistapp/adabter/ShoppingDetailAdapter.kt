@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shoppinglistapp.databinding.DetailShoppingViewLayoutBinding
-import com.example.shoppinglistapp.room.ShoppingList
+import com.example.shoppinglistapp.model.ShoppingList
 
 class ShoppingDetailAdapter : RecyclerView.Adapter<ShoppingDetailAdapter.DetailListHolder> () {
 

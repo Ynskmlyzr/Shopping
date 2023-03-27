@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ShoppingListFragment">
+    tools:context=".view.ShoppingListFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/tb_shopping_list"
@@ -51,6 +51,16 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:background="@drawable/ic_history"
+                android:layout_marginEnd="14dp"/>
+
+            <ImageView
+                android:id="@+id/img_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/img_past_shopping"
+                android:background="@drawable/ic_baseline_delete_24"
                 android:layout_marginEnd="14dp"/>
 
 

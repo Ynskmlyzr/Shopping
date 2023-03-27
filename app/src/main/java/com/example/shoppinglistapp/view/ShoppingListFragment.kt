@@ -1,7 +1,7 @@
-package com.example.shoppinglistapp
+package com.example.shoppinglistapp.view
 
+import android.app.Activity
 import android.content.Context
-import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,25 +10,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.os.bundleOf
-import androidx.navigation.NavAction
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.room.Room
-import com.example.shoppinglistapp.adabter.ShoppingDetailAdapter
+import com.example.shoppinglistapp.R
 import com.example.shoppinglistapp.adabter.ShoppingListAdabter
-import com.example.shoppinglistapp.adabter.ShoppingPastAdapter
 import com.example.shoppinglistapp.databinding.FragmentShoppingListBinding
 import com.example.shoppinglistapp.model.CompletedShopping
-import com.example.shoppinglistapp.model.PastShoppingList
-import com.example.shoppinglistapp.room.ShoppingList
+import com.example.shoppinglistapp.model.ShoppingList
 import com.example.shoppinglistapp.room.ShoppingListDao
 import com.example.shoppinglistapp.room.ShoppingListDatabase
-import com.orhanobut.hawk.Hawk
 import java.text.SimpleDateFormat
 import java.util.*
-import java.util.prefs.Preferences
 import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 class ShoppingListFragment : Fragment() {
 
@@ -78,16 +72,22 @@ class ShoppingListFragment : Fragment() {
                         list.add(it)
                     }
                     shoppingListAdabter.listFill(list)
+                    if(list.size == 0){
+                        imgDelete.visibility = View.GONE
+                    }
+                    else{
+                        imgDelete.visibility = View.VISIBLE
+                    }
+                    if(list.size == 0){
+                        tvEnterAnItem.visibility = View.VISIBLE
+                    }
+                    else{
+                        tvEnterAnItem.visibility = View.GONE
+                    }
                 }
             })
 
-            shoppingListAdabter.emptyViewClikListener={
-                when(it){
-                    0 -> tvEnterAnItem.visibility=View.VISIBLE
 
-                    else -> tvEnterAnItem.visibility=View.GONE
-                }
-            }
 
 
 
@@ -103,17 +103,13 @@ class ShoppingListFragment : Fragment() {
             }
 
             btnAdd.setOnClickListener {
-                val now = Date()
-                val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm")
-                val now_str = formatter.format(now)
 
                 if (edtItem.text.isEmpty()){
                     Toast.makeText(context,"Please enter an item",Toast.LENGTH_SHORT).show()
                 }else{
                 if (list.size == 0){
 
-                    list.add(ShoppingList(1,edtItem.text.toString(),1,now_str
-                    ))
+                    list.add(ShoppingList(1,edtItem.text.toString(),1))
                     shoppingListDao.record(list.distinct())
                     edtItem.text = null
                 }else{
@@ -123,13 +119,17 @@ class ShoppingListFragment : Fragment() {
                                 Toast.makeText(context,"Please enter different an item",Toast.LENGTH_SHORT).show()
                             }
                         }
-                        list.add(ShoppingList(1,edtItem.text.toString(),1,now_str
-                        ))
+                        list.add(ShoppingList(1,edtItem.text.toString(),1))
                         shoppingListDao.record(list.distinct())
                         edtItem.text = null
                     }
 
                 }
+            }
+
+            imgDelete.setOnClickListener {
+                shoppingListDao.deleteAllMessage()
+                imgDelete.visibility = View.GONE
             }
 
             btnComplete.setOnClickListener {
@@ -141,7 +141,8 @@ class ShoppingListFragment : Fragment() {
                     completedShoppingList = list
                 }
                 tempCompletedShoppingList.add(completedShopping)
-                Navigation.findNavController(it).navigate(R.id.action_shoppingListFragment_to_pastShoppingFragment,
+                Navigation.findNavController(it).navigate(
+                    R.id.action_shoppingListFragment_to_pastShoppingFragment,
                     bundleOf("completedShoppingList" to tempCompletedShoppingList)
                 )
 
@@ -153,7 +154,8 @@ class ShoppingListFragment : Fragment() {
             }
 
             imgPastShopping.setOnClickListener {
-                Navigation.findNavController(it).navigate(R.id.action_shoppingListFragment_to_pastShoppingFragment,
+                Navigation.findNavController(it).navigate(
+                    R.id.action_shoppingListFragment_to_pastShoppingFragment,
                     bundleOf("completedShoppingList" to tempCompletedShoppingList))
             }
 

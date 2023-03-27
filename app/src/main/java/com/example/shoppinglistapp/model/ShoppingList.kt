@@ -1,11 +1,9 @@
-package com.example.shoppinglistapp.room
+package com.example.shoppinglistapp.model
 
 import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.shoppinglistapp.model.CompletedShopping
-import com.example.shoppinglistapp.model.PastShoppingList
 import kotlinx.android.parcel.Parcelize
 
 
@@ -17,9 +15,7 @@ data class ShoppingList(
     @ColumnInfo(name = "Name")
     var name : String?,
     @ColumnInfo(name = "Piece")
-    var piece : Int?,
-    @ColumnInfo(name = "Date")
-    var date : String?
+    var piece : Int?
 
 ):Parcelable{
     @PrimaryKey(autoGenerate = true) var uuid : Int = 0

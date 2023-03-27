@@ -1,27 +1,17 @@
 package com.example.shoppinglistapp.adabter
 
-import android.app.Activity
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.graphics.drawable.toDrawable
-import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
-import androidx.room.Room
-import com.example.shoppinglistapp.R
-import com.example.shoppinglistapp.room.ShoppingList
+import com.example.shoppinglistapp.model.ShoppingList
 import com.example.shoppinglistapp.databinding.ShoppingListViewLayoutBinding
 import com.example.shoppinglistapp.room.ShoppingListDao
-import com.example.shoppinglistapp.room.ShoppingListDatabase
-import kotlinx.coroutines.delay
-import kotlin.coroutines.coroutineContext
 
 class ShoppingListAdabter() : RecyclerView.Adapter<ShoppingListAdabter.ListHolder>() {
 
     private var list : ArrayList<ShoppingList> = arrayListOf()
     private var number :Int = 0
-    private lateinit var shoppingListDao: ShoppingListDao
-    var pieceViewClikListener: (ShoppingList,Int,Int) -> Unit = {_,_,_ ->}
+    var pieceViewClikListener: (ShoppingList, Int, Int) -> Unit = { _, _, _ ->}
     var deleteViewClikListener: (Int) -> Unit = {}
     var emptyViewClikListener: (Int) -> Unit = {}
 

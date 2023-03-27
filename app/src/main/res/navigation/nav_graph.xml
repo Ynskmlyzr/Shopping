@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.example.shoppinglistapp.DetailShoppingFragment"
+        android:name="com.example.shoppinglistapp.view.DetailShoppingFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_detail_shopping" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/shoppingListFragment"
-        android:name="com.example.shoppinglistapp.ShoppingListFragment"
+        android:name="com.example.shoppinglistapp.view.ShoppingListFragment"
         android:label="fragment_shopping_list"
         tools:layout="@layout/fragment_shopping_list" >
         <action
@@ -28,7 +28,7 @@
     </fragment>
     <fragment
         android:id="@+id/pastShoppingFragment"
-        android:name="com.example.shoppinglistapp.PastShoppingFragment"
+        android:name="com.example.shoppinglistapp.view.PastShoppingFragment"
         android:label="fragment_past_shopping"
         tools:layout="@layout/fragment_past_shopping" >
         <action

@@ -4,9 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shoppinglistapp.databinding.PastShoppingListViewLayoutBinding
-import com.example.shoppinglistapp.databinding.ShoppingListViewLayoutBinding
 import com.example.shoppinglistapp.model.CompletedShopping
-import com.example.shoppinglistapp.room.ShoppingList
 
 class ShoppingPastAdapter : RecyclerView.Adapter<ShoppingPastAdapter.PastListHolder> () {
 
