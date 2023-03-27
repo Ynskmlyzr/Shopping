@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="8dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/edt_product"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/const_plus_interest"
+        app:layout_constraintEnd_toStartOf="@id/const_plus_interest"
+        app:layout_constraintBottom_toBottomOf="@id/const_plus_interest"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="32dp"
+        android:textSize="20sp"
+        android:text="Yumurta"
+        android:gravity="center_vertical"
+        android:textColor="@color/black"
+        android:paddingStart="20dp"
+        android:background="@drawable/shop_list_background"
+        />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/const_plus_interest"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@drawable/shop_list_background"
+        >
+
+        <ImageView
+            android:id="@+id/img_interest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tv_piece"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginStart="5dp"
+            android:src="@drawable/ic_baseline_horizontal"
+            />
+
+        <TextView
+            android:id="@+id/tv_piece"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/img_interest"
+            app:layout_constraintEnd_toStartOf="@id/img_plus"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:textSize="20sp"
+            android:text="1"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:gravity="center"
+            />
+
+
+        <ImageView
+            android:id="@+id/img_plus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/tv_piece"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginEnd="5dp"
+            android:src="@drawable/ic_baseline_add_24"
+            />
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

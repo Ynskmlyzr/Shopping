@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ShoppingListFragment">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tb_shopping_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="#EF1111"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <ImageView
+                android:id="@+id/img_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:background="@drawable/ic_back"/>
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/img_back"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginStart="14dp"
+                android:text="Shopping List"
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                />
+
+            <ImageView
+                android:id="@+id/img_past_shopping"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:background="@drawable/ic_history"
+                android:layout_marginEnd="14dp"/>
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_shopping_list"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tb_shopping_list"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btn_complete"
+        android:layout_marginBottom="14dp"
+        />
+
+    <TextView
+        android:id="@+id/tv_enter_an_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/rv_shopping_list"
+        app:layout_constraintEnd_toEndOf="@id/rv_shopping_list"
+        app:layout_constraintTop_toTopOf="@id/rv_shopping_list"
+        app:layout_constraintBottom_toBottomOf="@id/rv_shopping_list"
+        android:text="Enter an item"
+        android:textSize="20sp"
+        />
+
+    <Button
+        android:id="@+id/btn_complete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/edt_item"
+        app:layout_constraintTop_toBottomOf="@id/rv_shopping_list"
+        android:text="Complete"
+        />
+
+
+    <EditText
+        android:id="@+id/edt_item"
+        android:layout_width="0dp"
+        android:layout_height="35dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btn_add"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_complete"
+        android:layout_margin="14dp"
+        android:hint="Enter an item"
+        android:background="@drawable/shop_list_background"
+        android:paddingStart="14dp"
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_add"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toEndOf="@id/edt_item"
+        app:layout_constraintTop_toTopOf="@id/edt_item"
+        app:layout_constraintBottom_toBottomOf="@id/edt_item"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="Add"
+        android:background="@drawable/shop_list_background"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
