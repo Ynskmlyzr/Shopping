@@ -9,22 +9,21 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.room.Room
 import com.example.shoppinglistapp.R
 import com.example.shoppinglistapp.adabter.ShoppingPastAdapter
 import com.example.shoppinglistapp.databinding.FragmentPastShoppingBinding
 import com.example.shoppinglistapp.model.CompletedShopping
 import com.example.shoppinglistapp.model.ShoppingList
 import com.example.shoppinglistapp.room.ShoppingListDao
+import com.example.shoppinglistapp.room.ShoppingListDatabase
 
 class PastShoppingFragment : Fragment() {
 
     private lateinit var binding: FragmentPastShoppingBinding
     private var shoppingPastAdapter = ShoppingPastAdapter()
-    private var list : ArrayList<ShoppingList> = arrayListOf()
-    private lateinit var shoppingListDao: ShoppingListDao
     private var tempCompletedShoppingList: ArrayList<CompletedShopping> = arrayListOf()
-    private var listNowShop : ArrayList<ShoppingList> = arrayListOf()
-    private var listNowDate : ArrayList<String> = arrayListOf()
+    private lateinit var shoppingListDao: ShoppingListDao
 
 
 
@@ -51,9 +50,18 @@ class PastShoppingFragment : Fragment() {
                 }
             }
 
+
             rvPastShopping.layoutManager=LinearLayoutManager(context)
             rvPastShopping.adapter=shoppingPastAdapter
             shoppingPastAdapter.listPastFill(tempCompletedShoppingList)
+
+
+            val db = context?.let { Room.databaseBuilder(it, ShoppingListDatabase::class.java,"List").fallbackToDestructiveMigration().allowMainThreadQueries().build() }
+            if (db != null) {
+                shoppingListDao = db.listDao()
+            }
+            shoppingListDao.deleteAllMessage()
+
 
             if(tempCompletedShoppingList.size == 0){
                 btnDelete.visibility = View.GONE

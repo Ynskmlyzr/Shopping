@@ -65,11 +65,14 @@ class ShoppingListFragment : Fragment() {
                 shoppingListDao = db.listDao()
             }
 
+
+
             shoppingListDao.getAllList().observe(requireActivity(),{
                 it?.let {
                     list.clear()
                     it.forEach {
                         list.add(it)
+                        list.size
                     }
                     shoppingListAdabter.listFill(list)
                     if(list.size == 0){
@@ -112,6 +115,7 @@ class ShoppingListFragment : Fragment() {
                     list.add(ShoppingList(1,edtItem.text.toString(),1))
                     shoppingListDao.record(list.distinct())
                     edtItem.text = null
+
                 }else{
 
                         for (x in 0..list.size-1) {
@@ -133,19 +137,22 @@ class ShoppingListFragment : Fragment() {
             }
 
             btnComplete.setOnClickListener {
-                val now = Date()
-                val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm")
-                val now_str = formatter.format(now)
-                val completedShopping = CompletedShopping().apply {
-                    completedDate = now_str
-                    completedShoppingList = list
+                if(list.size == 0){
+                    Toast.makeText(context,"Please enter different an item",Toast.LENGTH_SHORT).show()
+                }else{
+                    val now = Date()
+                    val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm")
+                    val now_str = formatter.format(now)
+                    val completedShopping = CompletedShopping().apply {
+                        completedDate = now_str
+                        completedShoppingList = list
+                    }
+                    tempCompletedShoppingList.add(completedShopping)
+                    Navigation.findNavController(it).navigate(
+                        R.id.action_shoppingListFragment_to_pastShoppingFragment,
+                        bundleOf("completedShoppingList" to tempCompletedShoppingList)
+                    )
                 }
-                tempCompletedShoppingList.add(completedShopping)
-                Navigation.findNavController(it).navigate(
-                    R.id.action_shoppingListFragment_to_pastShoppingFragment,
-                    bundleOf("completedShoppingList" to tempCompletedShoppingList)
-                )
-
 
             }
 
