@@ -14,6 +14,7 @@ import com.example.shoppinglistapp.R
 import com.example.shoppinglistapp.adabter.ShoppingPastAdapter
 import com.example.shoppinglistapp.databinding.FragmentPastShoppingBinding
 import com.example.shoppinglistapp.model.CompletedShopping
+import com.example.shoppinglistapp.model.Constant
 import com.example.shoppinglistapp.model.ShoppingList
 import com.example.shoppinglistapp.room.ShoppingListDao
 import com.example.shoppinglistapp.room.ShoppingListDatabase
@@ -42,9 +43,9 @@ class PastShoppingFragment : Fragment() {
             (arguments)?.let {
                 if (Build.VERSION.SDK_INT >= 33) {
                     tempCompletedShoppingList =
-                        it.getParcelableArrayList ("completedShoppingList", CompletedShopping::class.java) as ArrayList<CompletedShopping>
+                        it.getParcelableArrayList (Constant.CONS_COMP_SHOP_LIST, CompletedShopping::class.java) as ArrayList<CompletedShopping>
                 }else{
-                    (it.get("completedShoppingList") as ArrayList<CompletedShopping>).let {
+                    (it.get(Constant.CONS_COMP_SHOP_LIST) as ArrayList<CompletedShopping>).let {
                         tempCompletedShoppingList=it
                     }
                 }
@@ -88,7 +89,7 @@ class PastShoppingFragment : Fragment() {
 
                 Navigation.findNavController(it).navigate(
                     R.id.action_pastShoppingFragment_to_shoppingListFragment,
-                    bundleOf("completedShoppingList" to tempCompletedShoppingList))
+                    bundleOf(Constant.CONS_COMP_SHOP_LIST to tempCompletedShoppingList))
 
             }
 

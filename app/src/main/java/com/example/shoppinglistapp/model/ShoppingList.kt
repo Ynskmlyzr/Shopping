@@ -10,8 +10,6 @@ import kotlinx.android.parcel.Parcelize
 @Entity
 @Parcelize
 data class ShoppingList(
-    @ColumnInfo(name = "Random")
-    var random : Int?,
     @ColumnInfo(name = "Name")
     var name : String?,
     @ColumnInfo(name = "Piece")

@@ -12,7 +12,7 @@ class ShoppingListAdabter() : RecyclerView.Adapter<ShoppingListAdabter.ListHolde
     private var list : ArrayList<ShoppingList> = arrayListOf()
     private var number :Int = 0
     var pieceViewClikListener: (ShoppingList, Int, Int) -> Unit = { _, _, _ ->}
-    var deleteViewClikListener: (Int) -> Unit = {}
+    var deleteViewClikListener: (Int,Int) -> Unit = {_,_ ->}
     var emptyViewClikListener: (Int) -> Unit = {}
 
     class ListHolder(var binding: ShoppingListViewLayoutBinding) : RecyclerView.ViewHolder(binding.root){
@@ -47,7 +47,7 @@ class ShoppingListAdabter() : RecyclerView.Adapter<ShoppingListAdabter.ListHolde
                         emptyViewClikListener(list.size)
                     }
                     else{
-                        deleteViewClikListener(list.get(position).uuid)
+                        deleteViewClikListener(list.get(position).uuid,position)
                         emptyViewClikListener(list.size)
                 }
 

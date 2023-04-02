@@ -5,7 +5,6 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.shoppinglistapp.databinding.ActivityMainBinding
-import com.orhanobut.hawk.Hawk
 
 class MainActivity : AppCompatActivity() {
 
@@ -15,5 +14,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
     }
 }

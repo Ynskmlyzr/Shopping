@@ -3,9 +3,10 @@ package com.example.shoppinglistapp.room
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.shoppinglistapp.model.ShoppingList
+import java.util.concurrent.Flow
 
 
-@Dao
+@androidx.room.Dao
 interface ShoppingListDao {
         @Insert(onConflict = OnConflictStrategy.REPLACE)
         fun record (shoppingList: List<ShoppingList>)
