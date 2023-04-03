@@ -24,7 +24,6 @@ class PastShoppingFragment : Fragment() {
     private lateinit var binding: FragmentPastShoppingBinding
     private var shoppingPastAdapter = ShoppingPastAdapter()
     private var tempCompletedShoppingList: ArrayList<CompletedShopping> = arrayListOf()
-    private lateinit var shoppingListDao: ShoppingListDao
 
 
 
@@ -55,13 +54,6 @@ class PastShoppingFragment : Fragment() {
             rvPastShopping.layoutManager=LinearLayoutManager(context)
             rvPastShopping.adapter=shoppingPastAdapter
             shoppingPastAdapter.listPastFill(tempCompletedShoppingList)
-
-
-            val db = context?.let { Room.databaseBuilder(it, ShoppingListDatabase::class.java,"List").fallbackToDestructiveMigration().allowMainThreadQueries().build() }
-            if (db != null) {
-                shoppingListDao = db.listDao()
-            }
-            shoppingListDao.deleteAllMessage()
 
 
             if(tempCompletedShoppingList.size == 0){

@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.room.Room
@@ -26,6 +27,8 @@ import com.example.shoppinglistapp.room.ShoppingListDatabase
 import com.example.shoppinglistapp.viewmodel.ShoppingListViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
@@ -39,9 +42,12 @@ class ShoppingListFragment : Fragment() {
     private var tempCompletedShoppingList: ArrayList<CompletedShopping> = arrayListOf()
     private lateinit var shoppingListViewModel : ShoppingListViewModel
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         shoppingListViewModel = ViewModelProvider(this).get(ShoppingListViewModel::class.java)
+        shoppingListViewModel.roomDataList(list)
+        shoppingListViewModel.roomList(requireActivity(),list)
     }
 
     override fun onCreateView(
@@ -52,6 +58,7 @@ class ShoppingListFragment : Fragment() {
         return binding.root
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
@@ -67,50 +74,48 @@ class ShoppingListFragment : Fragment() {
                 }
             }
 
-            visibility()
-            observe()
             rvShoppingList.layoutManager = LinearLayoutManager(context)
             rvShoppingList.adapter = shoppingListAdabter
             shoppingListAdabter.listFill(list)
-            shoppingListViewModel.roomDataList(list)
-            shoppingListViewModel.roomList(requireActivity(),list)
+            lifecycleScope.launchWhenStarted {
+                shoppingListViewModel.flowTotal.collect{
+                    shoppingListAdabter.listFill(it)
+                    visibility()
+                }
+            }
 
-            shoppingListAdabter.pieceViewClikListener={ shopList,number,listSize->
-                shopList.piece=number
-                shoppingListViewModel.roomDataUpdate(list,shopList)
+
+
+
+            shoppingListAdabter.pieceViewClikListener={ shopList,number,listSize,id->
+                    shopList.piece=number
+                    list.get(listSize).piece = number
+                    shoppingListViewModel.roomDataUpdate(list,shopList)
+                    shoppingListAdabter.listFill(list)
             }
 
             shoppingListAdabter.deleteViewClikListener={ uid,position ->
-                list.removeAt(position)
-                shoppingListViewModel.roomDeleteItem(list,uid)
+                    list.removeAt(position)
+                    shoppingListViewModel.roomDeleteItem(list,uid)
+                    shoppingListAdabter.listFill(list)
+                    visibility()
             }
 
             btnAdd.setOnClickListener {
                 dataAdd()
+                shoppingListAdabter.listFill(list)
+                visibility()
             }
 
             imgDelete.setOnClickListener {
-                shoppingListViewModel.roomDataAllDelete(list)
+                    list.clear()
+                    shoppingListViewModel.roomDataAllDelete(list)
+                    shoppingListAdabter.listFill(list)
+                    visibility()
             }
 
             btnComplete.setOnClickListener {
-                if(list.size == 0){
-                    Toast.makeText(context,"Please enter different an item",Toast.LENGTH_SHORT).show()
-                }else{
-                    val now = Date()
-                    val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm")
-                    val now_str = formatter.format(now)
-                    val completedShopping = CompletedShopping().apply {
-                        completedDate = now_str
-                        completedShoppingList = list
-                    }
-                    tempCompletedShoppingList.add(completedShopping)
-                    Navigation.findNavController(it).navigate(
-                        R.id.action_shoppingListFragment_to_pastShoppingFragment,
-                        bundleOf(Constant.CONS_COMP_SHOP_LIST to tempCompletedShoppingList)
-                    )
-                }
-
+                complate()
             }
 
             imgBack.setOnClickListener {
@@ -123,22 +128,6 @@ class ShoppingListFragment : Fragment() {
                     bundleOf(Constant.CONS_COMP_SHOP_LIST to tempCompletedShoppingList))
             }
 
-        }
-    }
-    fun observe (){
-        shoppingListViewModel.shopList.observe(viewLifecycleOwner){ liste ->
-            liste?.let { listem ->
-                shoppingListAdabter.listFill(listem)
-                binding.apply {
-                    if(listem.size == 0){
-                        imgDelete.visibility = View.GONE
-                        tvEnterAnItem.visibility = View.VISIBLE
-                    }else{
-                        imgDelete.visibility = View.VISIBLE
-                        tvEnterAnItem.visibility = View.GONE
-                    }
-                }
-            }
         }
     }
 
@@ -154,12 +143,12 @@ class ShoppingListFragment : Fragment() {
         }
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     fun dataAdd(){
         binding.apply {
             if (edtItem.text.isEmpty()){
-                Toast.makeText(context,"Please enter an item",Toast.LENGTH_SHORT).show()
+                Toast.makeText(context,Constant.CONS_PLEASE_ITEM,Toast.LENGTH_SHORT).show()
             }else{
-                val addName : String=edtItem.text.toString().lowercase().trim()
                 if (list.size == 0){
                     list.add(ShoppingList(edtItem.text.toString().trim().lowercase().capitalize(),1))
                     shoppingListViewModel.roomDataStorage(list)
@@ -167,7 +156,7 @@ class ShoppingListFragment : Fragment() {
 
                 }else{
                     for (x in 0..list.size-1){
-                        if(list.get(x).name!!.lowercase().trim() == addName){
+                        if(list.get(x).name!!.lowercase().trim() == edtItem.text.toString().lowercase().trim()){
                             var number: Int = list.get(x).piece!!.toInt()
                             number = number + 1
                             list.get(x).piece = number
@@ -181,6 +170,30 @@ class ShoppingListFragment : Fragment() {
                         shoppingListViewModel.roomDataStorage(list)
                         edtItem.text = null
                     }
+                }
+
+            }
+        }
+    }
+
+    fun complate (){
+        binding.apply {
+            if(list.size == 0){
+                Toast.makeText(context,"Please enter different an item",Toast.LENGTH_SHORT).show()
+            }else{
+                val now = Date()
+                val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm")
+                val now_str = formatter.format(now)
+                val completedShopping = CompletedShopping().apply {
+                    completedDate = now_str
+                    completedShoppingList = list
+                }
+                view?.let {
+                    tempCompletedShoppingList.add(completedShopping)
+                    Navigation.findNavController(it).navigate(
+                        R.id.action_shoppingListFragment_to_pastShoppingFragment,
+                        bundleOf(Constant.CONS_COMP_SHOP_LIST to tempCompletedShoppingList)
+                    )
                 }
 
             }

@@ -14,6 +14,9 @@ interface ShoppingListDao {
         @Query("SELECT * FROM shoppingList")
         fun getAllList(): LiveData<List<ShoppingList>>
 
+        @Query("UPDATE shoppingList SET piece=:number WHERE uuid=:uid")
+        fun up(number :Int,uid:Int)
+
         @Update
         fun update(shoppingList: ShoppingList)
 

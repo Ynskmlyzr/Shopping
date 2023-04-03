@@ -11,7 +11,7 @@ class ShoppingListAdabter() : RecyclerView.Adapter<ShoppingListAdabter.ListHolde
 
     private var list : ArrayList<ShoppingList> = arrayListOf()
     private var number :Int = 0
-    var pieceViewClikListener: (ShoppingList, Int, Int) -> Unit = { _, _, _ ->}
+    var pieceViewClikListener: (ShoppingList, Int, Int,Int) -> Unit = { _, _, _ ,_,->}
     var deleteViewClikListener: (Int,Int) -> Unit = {_,_ ->}
     var emptyViewClikListener: (Int) -> Unit = {}
 
@@ -35,7 +35,7 @@ class ShoppingListAdabter() : RecyclerView.Adapter<ShoppingListAdabter.ListHolde
                     number=list.get(position).piece!!.toInt()
                     number++
                     tvPiece.text = number.toString()
-                    pieceViewClikListener(list.get(position),number,list.size)
+                    pieceViewClikListener(list.get(position),number,position,list.get(position).uuid)
                     emptyViewClikListener(list.size)
                 }
                 imgInterest.setOnClickListener {
@@ -43,7 +43,7 @@ class ShoppingListAdabter() : RecyclerView.Adapter<ShoppingListAdabter.ListHolde
                         number=list.get(position).piece!!.toInt()
                         number--
                         tvPiece.text = number.toString()
-                        pieceViewClikListener(list.get(position),number,list.size)
+                        pieceViewClikListener(list.get(position),number,position,list.get(position).uuid)
                         emptyViewClikListener(list.size)
                     }
                     else{
